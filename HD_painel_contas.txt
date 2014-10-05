@@ -1,0 +1,174 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Painel de Controle de Contas		                       	    //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,150,150,5	script	Painel de Controle#HD	89,{
+
+//================ Configurações ===============================//
+
+set .cp$,"[^EE0000Painel de Controle^000000]";
+set .menu$,"^FFA500•^000000";
+if(gettime(3) <= 18)
+		{
+	 		set .hr$,"om dia";
+		}
+	else
+		{
+			set .hr$,"oa noite";
+		}
+
+//================ Banco de Dados ==============================//
+	QUERY_SQL "SELECT `user_pass` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",@password$;
+	QUERY_SQL "SELECT `email` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",@email$;
+	QUERY_SQL "SELECT `logincount` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",@logou$;
+	QUERY_SQL "SELECT `level` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",@nivel$;
+//==============================================================//
+
+	mes .cp$;
+	mes "B"+.hr$+", "+strcharinfo(0);
+	mes "Sou o assistente de contas.";
+	mes "Aqui você poderá trocar sua senha, seu e-mail e deletar alguns itens do seu inventário.";
+	mes "Me diga o que você precisa.";
+	mes " ";
+	mes "Senha atual: ^BF3EFF"+@password$+"^000000";
+	mes "E-mail atual: ^BF3EFF"+@email$+"^000000";
+	switch(select(""+.menu$+" Trocar minha senha:"+.menu$+" Trocar meu e-mail:"+.menu$+" Deletar item:"+.menu$+" Estatísticas da minha Conta:"+.menu$+" Nada"))
+	{
+		case 1:
+			next;
+			mes .cp$;
+			mes "Sua senha atual é: ^BF3EFF"+@password$+"^000000";
+			mes "Deseja mesmo troca-la?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					next;
+					mes .cp$;
+					mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+					close;
+				}
+			next;
+			mes .cp$;
+			mes "Ok então, digite a sua nova senha.";
+			next;
+			digit .senha$;
+			mes .cp$;
+			mes "Sua nova senha é: ^BF3EFF"+.senha$+"^000000, está certo disso?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					next;
+					mes .cp$;
+					mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+					close;
+				}
+			next;
+			QUERY_SQL "UPDATE `login` SET `user_pass` = '"+.senha$+"' WHERE `account_id` = '"+getcharid(3)+"'";
+			mes .cp$;
+			mes "Agora sua nova senha é: ^BF3EFF"+.senha$+"^000000";
+			next;
+			mes .cp$;
+			mes "Obrigado por usar os meus serviços.";
+			close;
+
+		case 2:
+			next;
+			mes .cp$;
+			mes "Seu e-mail atual é: ^BF3EFF"+@email$+"^000000";
+			mes "Deseja mesmo troca-lo?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					next;
+					mes .cp$;
+					mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+					close;
+				}
+			next;
+			mes .cp$;
+			mes "Ok então, digite a seu novo e-mail.";
+			mes "DICA: use um e-mail simples e não use hotmail.";
+			next;
+			digit .mail$;
+			mes .cp$;
+			mes "Seu novo e-mail é: ^BF3EFF"+.mail$+"^000000, está certo disso?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					next;
+					mes .cp$;
+					mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+					close;
+				}
+			next;
+			QUERY_SQL "UPDATE `login` SET `email` = '"+.mail$+"' WHERE `account_id` = '"+getcharid(3)+"'";
+			mes .cp$;
+			mes "Agora seu novo e-mail é: ^BF3EFF"+.mail$+"^000000";
+			next;
+			mes .cp$;
+			mes "Obrigado por usar os meus serviços.";
+			close;
+
+		case 3:
+			next;
+			mes .cp$;
+			mes "Bom, para deletar seu item bugado, deixe apenas ele no seu inventário.";
+			mes "Tudo certo então? Posso deletar seu item?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					next;
+					mes .cp$;
+					mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+					close;
+				}
+			next;
+			atcommand "@itemreset";
+			mes .cp$;
+			mes "Feito, seu item foi deletado com sucesso.";
+			close;
+
+		case 4:
+			next;
+			mes .cp$;
+			mes "Vejo em meu sistema, que você já logou "+@logou$+" vezes nessa conta.";
+			next;
+			mes .cp$;
+			mes "Vejo também, que você logou "+logou+" vezes neste char.";
+			next;
+			mes .cp$;
+			if(getgmlevel() >= 1)
+				{
+					if(#CASHPOINTS >= 1)
+						{
+							mes "Sua conta é VIP e possui "+#CASHPOINTS+" Cashs.";
+							close;
+						}
+					mes "Sua conta é VIP e não possui Cashs.";
+					close;
+				}
+			if(#CASHPOINTS >= 1)
+				{
+					mes "Sua conta não é VIP e possui "+#CASHPOINTS+" Cashs.";
+					close;
+				}
+			mes "Sua conta não é VIP e não possui Cashs.";
+			close;
+			
+		case 5:
+			next;
+			mes .cp$;
+			mes "Tudo bem então, tenha um(a) b"+.hr$+"!";
+			close;
+	}
+//==== Estatísticas de Char
+OnPCLoginEvent:
+	set logou,logou + 1;
+	end;
+}
