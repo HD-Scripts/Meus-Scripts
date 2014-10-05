@@ -1,0 +1,174 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Gerente de Administração de Cashs e VIP's (Sem tabela)       //
+// Administrador de DiasVip										//
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+// Feito para @Mytho - Cronus-Emulator.com						//
+//==============================================================//
+
+prontera,156,160,5	script	Gerente Cash#HD	91,{
+
+//================================== Configurações =============//
+
+set .nick$, "[^058884Gerente Cash^000000]";	// Nome do NPC
+set .level, 99;								// Nivel de ADM
+set .menu$, "^FFA500•^000000";				// Menu
+set .server$, "^0000EE2YouRO^000000";		// Nome do Server
+set .site$, "www.seusite.com.br";			// Site do Servidor
+
+//==============================================================//
+
+if(getgmlevel() >= .level)
+	{
+	while(1)
+		{
+		mes .nick$;
+		mes "Olá "+strcharinfo(0);
+		mes "Sou o Gerente de Cashs do servidor "+.server$+"";
+		next;
+		mes .nick$;
+		mes "Posso lhe ajudar a Adicionar ou Remover pontos de Cashs das contas...";
+		next;
+		mes .nick$;
+		mes "Deseja administrar alguns Cashs hoje?";
+		if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+			{
+				mes .nick$;
+				mes "Tudo bem então, até mais.";
+				close;
+			}
+		next;
+		mes .nick$;
+		mes "Certo, então digite o ^EE0000login^000000 da conta que você quer administrar...";
+		mes "Dica: Digite '^EE0000fechar^000000' sem áspas para cancelar.";
+		input .@acc$;
+		next;
+		query_sql "SELECT `userid`,`account_id` FROM `login` WHERE `userid`='"+.@acc$+"'",.@userID$,.@accID;
+		if(.@acc$ == "fechar")
+			{
+				mes .nick$;
+				mes "Cancelado.";
+				close;
+			}
+		if(.@userID$ != .@acc$)
+			{
+				mes .nick$;
+				mes "Me desculpe, mas você digitou um ^EE0000login^000000 que não existe...";
+				mes "Tente novamente.";
+				close;
+			}
+		mes .nick$;
+		mes "Certo, você quer fazer o que com esta conta?";
+		switch(select(""+.menu$+" Adicionar Cashs:"+.menu$+" Remover Cashs:"+.menu$+" Ver Saldo:"+.menu$+" Sair")){
+		
+		case 1:
+			next;
+			mes .nick$;
+			query_sql "SELECT `value` FROM `acc_reg_num_db` WHERE `key`='#CASHPOINTS' AND `account_id` = '"+.@accID+"'",.@value;
+			mes "Essa conta possui "+.@value+" Cashs.";
+			mes "Deseja adicionar quantos Cashs nesta conta?";
+			mes " ";
+			mes "Dica: Digite '^EE00000^000000' para cancelar.";
+			input @cashs$;
+			next;
+			if(@cashs$ == "0")
+				{
+					mes .nick$;
+					mes "Cancelado.";
+					close;
+				}
+			mes .nick$;
+			mes "Quer mesmo adicionar "+@cashs$+" Cashs à conta ^0000EE"+.@userID$+"^000000?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					mes .nick$;
+					mes "Tudo bem então, até mais.";
+					close;
+				}
+			if(getarraysize(.@value))
+			{
+   				query_sql "UPDATE `acc_reg_num_db` SET `value` = `value` + '"+@cashs$+"' WHERE `key`='#CASHPOINTS' AND `account_id` = '"+.@accID+"'";
+			}else{
+    				query_sql "INSERT INTO `acc_reg_num_db` (`key`, `value`, `index`, `account_id`) VALUES ('#CASHPOINTS', '"+@cashs$+"', '0', '"+.@accID+"')";
+			}
+			next;
+			mes .nick$;
+			mes "Cashs adicionados com sucesso!";
+			dispbottom "[Gerente de Contas]: "+@cashs$+" Cashs adicionados à conta ["+.@userID$+"].";
+			close;
+		
+		case 2:
+			next;
+			mes .nick$;
+			query_sql "SELECT `value` FROM `acc_reg_num_db` WHERE `key` ='#CASHPOINTS' AND `account_id` = '"+.@accID+"'",.@value;
+			mes "Essa conta possui "+.@value+" Cashs.";
+			mes "Deseja remover quantos Cashs desta conta?";
+			mes " ";
+			mes "Dica: Digite '^EE00000^000000' para cancelar.";
+			input @cashss$;
+			next;
+			if(@cashss$ == "0")
+				{
+					mes .nick$;
+					mes "Cancelado.";
+					close;
+				}
+			mes .nick$;
+			mes "Quer mesmo remover "+@cashss$+" Cashs da conta ^0000EE"+.@userID$+"^000000?";
+			if(select(""+.menu$+" Sim:"+.menu$+" Não") == 2)
+				{
+					mes .nick$;
+					mes "Tudo bem então, até mais.";
+					close;
+				}
+			if(getarraysize(.@value))
+			{
+   				query_sql "UPDATE `acc_reg_num_db` SET `value` = `value` - '"+@cashss$+"' WHERE `key`='#CASHPOINTS' AND `account_id` = '"+.@accID+"'";
+			}else{
+    				query_sql "INSERT INTO `acc_reg_num_db` (`key`, `value`, `index`, `account_id`) VALUES ('#CASHPOINTS', '"+@cashss$+"', '0', '"+.@accID+"')";
+			}
+			next;
+			mes .nick$;
+			mes "Cashs removidos com sucesso!";
+			dispbottom "[Gerente de Contas]: "+@cashss$+" Cashs removidos da conta ["+.@userID$+"].";
+			close;
+
+		case 3:
+			next;
+			mes .nick$;
+			query_sql "SELECT `value` FROM `acc_reg_num_db` WHERE `key` ='#CASHPOINTS' AND `account_id` = '"+.@accID+"'",.@value;
+			mes "Essa conta possui "+.@value+" Cashs.";
+			close;
+		case 4:
+			next;
+			mes .nick$;
+			mes "Tudo bem então, tenha um ótimo dia.";
+			close;
+			}
+		}
+	}
+	if(#CASHPOINTS == 0){
+	mes .nick$;
+	mes "Você não possui Cashs.";
+	mes "Entre no site "+.site$+", e veja como adquirir!";
+	close;
+	}
+	mes .nick$;
+	mes "Você possui "+#CASHPOINTS+" Cashs.";
+	close;
+	
+OnPCLoginEvent:
+if(!#CASHPOINTS) end;
+dispbottom "[Gerente de Cashs]: Você possui "+#CASHPOINTS+" Cashs!";
+end;
+
+}
