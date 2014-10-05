@@ -1,0 +1,185 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Teleportadora de Quests para Classes                         //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,156,185,5	script	Teleportador de Classes#HD	92,{
+
+//===================== Configurações ==========================================================//
+if(gettime(3) >= 6 && gettime(3) <= 18) set .hor$,"Bom dia"; else  set .hor$,"Boa noite";		
+set .telep$,"[^0000EE"+strnpcinfo(1)+"^000000]";							
+set .fala$,"Selecione qual das classes quer seguir:";							
+set .falat$,"Tudo bem, teleportando...";												
+//===================== Fim das Configurações ==================================================//
+
+	mes .telep$;
+	mes ""+.hor$+" "+(Sex?"sr.":"sra.")+" ^EE0000"+strcharinfo(0)+"^000000!";
+	mes "Posso lhe teletransportar para o local de sua Quest de Classe!";
+	next;
+	mes .telep$;
+	mes "Tudo depende de qual tipo de Classe você quer seguir...";
+	mes "Escolha o tipo de Classe que deseja para eu lhe teletransportar.";
+	next;
+	switch(select("- Guerreiros:- Magos:- Sagrados:- Arcos:- Machados:- Ladrões:- Super Aprendiz:- Nenhum"))
+	{
+		case 1:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Espadachim:- Templário:- Cavaleiro"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "izlude_in",74,172;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "prt_castle",45,169;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "prt_in",88,101;
+							close;
+					}
+		case 2:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Mago:- Bruxo:- Sábio"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "geffen_in",164,124;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "gef_tower",111,37;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "yuno_in03",154,35;
+							close;
+					}
+		case 3:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Noviço:- Sacerdote:- Monge"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "prt_church",183,41;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "prt_church",16,41;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "prt_monk",59,247;
+							close;
+					}
+
+		case 4:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Arqueiro:- Caçador:- Bardo:- Odalisca"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "payon_in02",64,68;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "hu_in01",386,373;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "comodo",226,123;
+							close;
+						case 4:
+							mes .falat$;
+							next;
+							warp "comodo",193,151;
+							close;
+					}
+		case 5:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Mercador:- Alquimista:- Ferreiro"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "alberta_in",53,43;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "alde_alche",27,185;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "ein_in01",18,28;
+							close;
+					}
+		case 6:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Gatuno:- Assassino:- Arruaceiro"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "moc_prydb1",39,129;
+							close;
+						case 2:
+							mes .falat$;
+							next;
+							warp "in_moc_16",19,33;
+							close;
+						case 3:
+							mes .falat$;
+							next;
+							warp "in_rogue",363,122;
+							close;
+					}
+		case 7:
+			mes .telep$;
+			mes .fala$;
+				switch(select("- Super Aprendiz"))
+					{
+						case 1:
+							mes .falat$;
+							next;
+							warp "aldeba_in",223,167;
+							close;
+					}
+		case 8:
+			mes .telep$;
+			mes "Tudo bem então, "+.hor$+"!";
+			close;
+	}
+}
+
+//======================= Recuse imitações! ======================//
