@@ -1,0 +1,132 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Vendedor de Dias VIP, por Cash (#CASHPOINTS)                 //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,147,174,5	script	Vendedora VIP#HD	91,{
+
+//===================== Configurações ==========================//
+							        		//
+set @15d, "15";								// Dias configuraveis(I).       
+set @30d, "30";								// Dias configuraveis(II).      
+set @lvl, "1";								// Level VIP                    
+set @preco1, "5000";						// Preço do vip de 15 dias.     
+set @preco2, "7000";						// Preço do vip de 30 dias.     
+set @vip$,"[^00FFFFVendedora VIP^000000]";      // Nome do NPC 			
+set @site$,"^EE0000www.seusite.com.br^000000";  // Seu site     		
+							        		//
+//===================== Fim das Configurações ===================//
+
+	mes @vip$;
+	mes "Olá ^0000FF"+Strcharinfo(0);
+	mes "^000000Você tem ^FF6600"+#CASHPOINTS+"^000000 de créditos";
+	Next;
+	mes @vip$;
+	mes "Sou uma vendedora ^000EEEVIP^000000, e vendo dois tipos de [^000EEEPlano VIP^000000]";
+	mes "você está interessado?";
+	Next;
+	if(select("Sim:Não") == 2){
+		mes "OK, volte quando estiver preparado para negociar!";
+		close;
+	}
+
+	mes @vip$;
+	mes "Escolha o tipo de [^000EEEPlano VIP^000000], tenho de:";
+	mes "[^FF000015 dias^000000]";
+	mes "[^FF000030 dias^000000]";
+	mes "Você irá querer qual?";
+	next;
+	switch(select("- 15 Dias:- 30 Dias:- Nenhum")){
+
+	case 1:
+		mes @vip$;
+		mes "Huuuum, Plano de ^FF0000"+@15d+" dias?^000000 Para aderir este plano você precisará ter ^FF6600"+@preco1+"^000000 de créditos.";
+		mes "Então vai querer?";
+		next;
+		if(select("- Sim:- Não") == 2){
+		mes @vip$;
+		mes "OK, volte quando quiser negociar seus créditos!";
+		close;
+		}
+			if(#CASHPOINTS >= @preco1){
+			set #CASHPOINTS,#CASHPOINTS-@preco1;
+			query_sql "update `login` SET `diasvip` = `diasvip`+"+@15d+",`level` = "+@lvl+" WHERE `account_id`='"+getcharid(3)+"'";
+			mes @vip$;
+			mes "Obrigada por contribuir para o servidor!";
+			mes "Acesse já o site ^339966"+@site$+"^000000 e veja os comandos ^FF6600VIP^000000 e tenha um bom jogo!";
+			Next;
+			mes @vip$;
+			mes "Pronto, agora irei deslogar você para a ativação do [^000EEEMaster Plano VIP^000000]";
+			Next;
+			atcommand "@kick "+strcharinfo(0);
+			end;
+			}
+				mes @vip$;
+				mes "Você não possui créditos nescessários!";
+				mes "Para saber como adquirir crédito acesse o site:";
+				mes "^339966"+@site$+"^000000";
+				close;
+	case 2:
+		mes @vip$;
+		mes "huuuum, Plano de ^FF0000"+@30d+" dias?^000000";
+		mes "Para aderir este plano você precisará ter ^FF6600"+@preco2+"^000000 de créditos.";
+		mes "Então vai querer?";
+		next;
+		if(select("- Sim:- Não") == 2){
+		mes @vip$;
+		mes "OK, volte quando quiser negociar seus créditos!";
+		close;
+		}
+			if(#CASHPOINTS >= @preco2){
+			set #CASHPOINTS,#CASHPOINTS-@preco2;
+			query_sql "update `login` SET `diasvip` = `diasvip`+"+@30d+",`level` = "+@lvl+" WHERE `account_id`='"+getcharid(3)+"'";
+			mes @vip$;
+			mes "Obrigada por contribuir para o servidor!";
+			mes "Acesse já o site ^339966"+@site$+"^000000 e veja os comandos ^FF6600VIP^000000 e tenha um bom jogo!";
+			Next;
+			mes @vip$;
+			mes "Pronto, agora irei deslogar você para a ativação do [^000EEEMaster Plano VIP^000000]";
+			Next;
+			atcommand "@kick "+strcharinfo(0);
+			end;
+			}
+				mes @vip$;
+				mes "Você não possui créditos nescessários!";
+				mes "Para saber como adquirir crédito acesse o site:";
+				mes "^339966"+@site$+"^000000";
+				close;
+
+	case 3:
+		mes @vip$;
+		mes "Tudo bem então, fique a vontade.";
+		close;
+	}
+
+//====================== "Balão de Chat" =============//
+
+OnInit:
+ waitingroom "",0;
+  OnTimer2000:
+   setarray .@Display$,"Compre já seu VIP!","Adquira comandos exclusivos!","VIP para Todos!";
+    set .@msg, rand(getarraysize(.@Display$));
+    delwaitingroom;
+     waitingroom .@Display$[.@msg],0;
+      initnpctimer;
+
+/*====================== Tabela SQL ==========================
+
+ALTER TABLE `login` ADD `vipdia` INT(4) NOT NULL DEFAULT '0';
+
+==============================================================*/
+
+}
