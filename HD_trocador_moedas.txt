@@ -1,0 +1,69 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Shop Dinâmico                                                //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,149,149,5	script	Shop de Moedas#HD	91,{
+
+//===================== Configurações ==========================================//
+setarray .@item[0], 14532,5378,5283;			//ID dos itens			
+setarray .@custo[0], 5,100,100;					//Quantidade dos itens		
+set .@moeda,7539;								//ID da Moeda			
+set .shopn$,"[^007700Moedas por Itens^000000]";	//Nome do NPC			
+//===================== Fim das Configurações ==================================//
+
+
+mes .shopn$;
+mes "Olá "+strcharinfo(0);
+mes "Quer trocar suas ^0000FF"+getitemname(.@moeda)+"s^000000 por itens?";
+next;
+mes .shopn$;
+mes "Vejo que você tem ^0000FF"+countitem(.@moeda)+"^000000 "+getitemname(.@moeda)+"s. O preço dos itens estão marcados em ^0000EEAZUL^000000";
+next;
+for(set .@i,0; .@i<getarraysize(.@item); set .@i,.@i+1)
+{
+	if (getitemslots(.@item[.@i]) > 0) set .@temp$,.@temp$+getitemname(.@item[.@i])+" ["+getitemslots(.@item[.@i])+"] - ^FF0000"+.@custo[.@i]+"^000000:";
+	else set .@temp$,.@temp$+getitemname(.@item[.@i])+" - ^0000EE"+.@custo[.@i]+"^000000:";
+}
+menu .@temp$,-;
+set .@selected,@menu-1;
+mes .shopn$;
+mes "Insira a quantidade de ^0000FF"+getitemname(.@item[.@selected])+"^000000 que você deseja.";
+next;
+input .@amount;
+mes .shopn$;
+mes "Tem certeza que quer trocar ^0000FF"+.@amount*.@custo[.@selected]+" "+getitemname(.@moeda)+"(s)^000000 por ^FF0000"+.@amount+" "+getitemname(.@item[.@selected])+"^000000?";
+next;
+switch(select("- Sim, claro:- Não, obrigado")) {
+	case 1:
+	mes .shopn$;
+	if(countitem(.@moeda) < .@custo[.@selected]*.@amount || .@amount < 1 || .@amount > 30000) {
+		mes "Desculpe, mas você não tem "+getitemname(.@moeda)+" suficientes.";
+		mes "Favor volte quando tiver!";
+		close;
+	}
+	if (checkweight(.@item[.@selected],.@amount) == 0) {
+		mes "Você não pode carregar "+.@amount+" "+getitemname(.@item[.@selected])+".";
+		close;
+	}
+	delitem .@moeda,.@custo[.@selected]*.@amount;
+	getitem .@item[.@selected],.@amount;
+	mes "Aqui está seus itens!";
+	close;
+	
+	case 2:
+	mes .shopn$;
+	mes "Muito bem então, boa sorte!";
+	close;
+	}
+}
