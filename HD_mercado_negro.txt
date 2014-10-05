@@ -1,0 +1,116 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Mercado Negro em 1 NPC apenas!                               //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,134,188,5	script	Mercado Negro#HD	92,{
+
+//==============================================================
+set @npc$,"[^FF0000Mercado Negro^000000]";		// Nome do NPC
+//==============================================================
+
+mes @npc$;
+mes "Olá "+strcharinfo(0);
+mes "Voce quer ver os itens que eu tenho à sua disposição?";
+if(select("- Sim:- Não") == 2) close;
+
+next;
+mes @npc$;
+mes "Então escolha que classe de itens você quer...";
+next;
+switch(select(
+	"- Utilidades",
+	"- Alquimista",
+	"- Flechas",
+	"- Espadas de Uma Mão",
+	"- Espadas de Duas Mãos",
+	"- Adagas",
+	"- Katars",
+	"- Instrumentos",
+	"- Chicotes",
+	"- Maças",
+	"- Lanças",
+	"- Arcos",
+	"- Punhos",
+	"- Escudos",
+	"- Armaduras",
+	"- Calçados e Capas",
+	"- Machados",
+	"- Acessórios",
+	"- Cajados",
+	"- Loja Guns",
+	"- Loja Ninja",
+	"- Nenhum"))
+{
+
+	case 1: callshop "HD_Utilidades"; end;
+	case 2: callshop "HD_Alquimista"; end;
+	case 3: callshop "HD_Flechas"; end;
+	case 4: callshop "HD_Espadas1"; end;
+	case 5: callshop "HD_Espadas2"; end;
+	case 6: callshop "HD_Adagas"; end;
+	case 7: callshop "HD_Katars"; end;
+	case 8: callshop "HD_Instrumentos"; end;
+	case 9: callshop "HD_Chicotes"; end;
+	case 10: callshop "HD_Macas"; end;
+	case 11: callshop "HD_Lancas"; end;
+	case 12: callshop "HD_Arcos"; end;
+	case 13: callshop "HD_Punhos"; end;
+	case 14: callshop "HD_Escudos"; end;
+	case 15: callshop "HD_Armaduras"; end;
+	case 16: callshop "HD_CalcadosCapas"; end;
+	case 17: callshop "HD_Machados"; end;
+	case 18: callshop "HD_Acessorios"; end;
+	case 19: callshop "HD_Cajados"; end;
+	case 20: callshop "HD_Guns"; end;
+	case 21: callshop "HD_Ninja"; end;
+	case 22: close;
+
+	}
+
+//====================== "Balão de Chat"
+
+OnInit:
+ waitingroom "",0;
+  OnTimer2000:
+   setarray .@Merc$,"[Mercado Negro]!","Itens em apenas 1 NPC!","Compre agora aqui!";
+    set .@msg, rand(getarraysize(.@Merc$));
+    delwaitingroom;
+     waitingroom .@Merc$[.@msg],0;
+      initnpctimer;
+
+//======================
+
+}
+
+-	shop	HD_Utilidades	-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,611:-1,715:-1,716:-1,717:-1
+-	shop	HD_Alquimista	-1,7144:-1,7127:-1,7128:-1,7129:-1,7130:-1,7131:-1,7132:-1,7133:-1,7134:-1,7140:-1,7141:-1,7143:-1,7137:200,7138:200
+-	shop	HD_Flechas	-1,1750:-1,1751:-1,1770:-1,1752:3,1753:5,1754:3,1755:3,1756:3,1757:3,1758:10,1756:10,1760:10,1761:10,1762:10,1763:10,1764:25,1765:25,1766:50,1767:10,1768:10,1769:10
+-	shop	HD_Espadas1	-1,1101:-1,1104:-1,1107:-1,1110:-1,1113:-1,1119:-1,1122:-1,1126:-1,1123:-1,1129:-1
+-	shop	HD_Espadas2	-1,1151:-1,1154:-1,1157:-1,1160:-1
+-	shop	HD_Adagas	-1,1204:-1,1207:-1,1213:-1,1216:-1,1219:-1,1222:-1
+-	shop	HD_Katars	-1,1250:-1,1252:-1,1254:-1
+-	shop	HD_Instrumentos	-1,1901:-1,1903:-1,1905:-1,1907:-1,1909:-1,1911:-1
+-	shop	HD_Chicotes	-1,1950:-1,1952:-1,1954:-1,1956:-1
+-	shop	HD_Macas	-1,1501:-1,1504:-1,1507:-1,1510:-1,1513:-1,1516:-1,1519:-1,1522:-1
+-	shop	HD_Lancas	-1,1401:-1,1404:-1,1407:-1,1411:-1,1451:-1,1454:-1,1457:-1,1460:-1,1463:-1
+-	shop	HD_Arcos	-1,1701:-1,1704:-1,1707:-1,1710:-1,1715:-1,1714:-1,1718:-1,1721:-1
+-	shop	HD_Punhos	-1,1801:-1,1803:-1,1805:-1,1807:-1,1809:-1,1811:-1
+-	shop	HD_Escudos	-1,2101:-1,2103:-1,2105:-1,2107:-1
+-	shop	HD_Armaduras	-1,2301:-1,2303:-1,2305:-1,2307:-1,2309:-1,2312:-1,2314:-1,2316:-1,2321:-1,2323:-1,2325:-1,2328:-1,2330:-1,2332:-1,2335:-1,2341:-1
+-	shop	HD_CalcadosCapas	-1,2401:-1,2403:-1,2405:-1,2411:-1,2501:-1,2503:-1,2505:-1
+-	shop	HD_Machados	-1,1352:-1,1355:-1,1358:-1,1361:-1,1363:-1,1364:-1,1365:-1,1366:-1,1367:-1,1368:-1,1369:-1,1302:-1,1304:-1,1305:-1,1306:-1
+-	shop	HD_Acessorios	-1,2609:-1,2612:-1,2613:-1,2608:-1,2627:-1
+-	shop	HD_Cajados	-1,1601:-1,1604:-1,1607:-1,1610:-1
+-	shop	HD_Guns	-1,13101:5000,13103:20000,13105:50000,13106:100000,13150:25000,13152:50000,13153:100000,13154:150000,13155:200000,13156:250000,13157:100000,13159:150000,13161:200000,13200:1,13201:20,13202:25,13203:75,13204:75,13205:75,13206:75,13207:75
+-	shop	HD_Ninja	-1,13250:10,13251:20,13252:30,13253:40,13254:100,13255:50,13256:50,13257:50,13258:50,13259:50,13300:100000,13302:50000,13303:200000,13006:200000,13008:100000,13009:200000,13011:200000,13013:200000,7521:150,7522:150,7523:150,7524:10000
