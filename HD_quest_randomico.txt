@@ -1,0 +1,96 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Quest randomico com 50% de chance                            //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,150,150,4      script  Quest Randomico 91,{
+ 
+//==
+set .ann,0; // Anunciar qual quest foi completada? 1=Sim, 0=Não
+//==
+ 
+        mes "[Quest Randomico]";
+        mes "Olá "+strcharinfo(0)+"!";
+        mes "Eu tenho alguns itens interessantes aqui, deseja dar uma olhada?";
+        next;
+        if( select("Claro!:Talvez mais tarde...") == 2 )
+        {
+                mes "[Quest Randomico]";
+                mes "Tudo bem, estarei aqui se você mudar de idéia.";
+                close;
+        }
+        mes "[Quest Randomico]";
+        mes "Bem, estes são os itens que eu tenho...";
+        mes "Sobre qual deles vai querer saber mais?";
+        next;
+        switch(select("Chifres de Bafomé:Nenhum"))
+        {
+        case 1:
+                mes "[Chifres de Bafomé]";
+                mes "Recompensa:";
+                mes "1x ^FF0000(50%)^000000 "+getitemname(5374);
+                mes "ou";
+                mes "1x ^FF0000(50%)^000000 "+getitemname(5518);
+                mes " ";
+                mes "Requerimento:";
+                mes "1x "+getitemname(6004);
+                mes "1x "+getitemname(2256);
+                mes "30x "+getitemname(7799);
+                mes "50x "+getitemname(7798);
+                mes "990000 Zenys";
+                next;
+                mes "[Quest Randomico]";
+                mes "Deseja fazer esta quest?";
+                next;
+                if( select("Sim!:Agora não...") == 2 )
+                {
+                        mes "[Quest Randomico]";
+                        mes "Tudo bem... Até mais!";
+                        close;
+                }
+                if(countitem(7799) >= 30 && countitem(7798) >= 50 && Zeny >= 990000 && countitem(6004) >= 1 && countitem(2256) >= 1)
+                {
+                        delitem 2256,1;
+                        delitem 6004,1;
+                        delitem 7799,30;
+                        delitem 7798,50;
+                        set Zeny,Zeny-990000;
+                        switch(rand(1,2))
+                        {
+                                case 1:
+                                mes "[Quest Randomico]";
+                                mes "Parabéns! Aqui está!";
+                                if(.ann) announce "[Quest Randomico] "+strcharinfo(0)+" completou a Quest "+getitemname(5374)+"!",8;
+                                getitem 5374,1;
+                                close;
+                               
+                                case 2:
+                                mes "[Quest Randomico]";
+                                mes "Parabéns! Aqui está!";
+                                if(.ann) announce "[Quest Randomico] "+strcharinfo(0)+" completou a Quest "+getitemname(5518)+"!",8;
+                                getitem 5518,1;
+                                close;
+                               
+                        }
+                }
+                break;
+        case 2:
+                mes "[Quest Randomico]";
+                mes "Tudo bem, estarei aqui se você mudar de idéia.";
+                close;
+        }
+        mes "[Quest Randomico]";
+        mes "Me desculpe, mas você não tem todos os itens necessários para esta quest.";
+        mes "Volte quando você tiver todos os itens!";
+        close;
+}
