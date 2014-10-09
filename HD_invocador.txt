@@ -1,0 +1,117 @@
+//==============================================================//
+//   _    _ _____     _____           _       _                 //
+//  | |  | |  __ \   / ____|         (_)     | |                //
+//  | |__| | |  | | | (___   ___ _ __ _ _ __ | |_ ___           //
+//  |  __  | |  | |  \___ \ / __| '__| | '_ \| __/ __|          //
+//  | |  | | |__| |  ____) | (__| |  | | |_) | |_\__ \          //
+//  |_|  |_|_____/  |_____/ \___|_|  |_| .__/ \__|___/          //
+//   Hurican Dooders Script's ™        | |                      //
+//                                     |_|                      //
+//                                                              //
+// Invoca MvP ou MiniBoss       	                              //
+// Versão 1.0                                                   //
+// Compatibilidade: Cronus & brAthena                           //
+//==============================================================//
+
+prontera,150,150,5  script  Invocador#hd  99,{
+ 
+//=================
+set .mvp$,"[Invocador]";
+//=================
+ 
+mes .mvp$;
+mes "Olá "+strcharinfo(0)+", posso invocar algum monstro pra você?";
+if(select("- Sim, um MiniBoss:- Sim, um MvP") == 2) goto mvp;
+next;
+mes .mvp$;
+mes "Então selecione qual você quer:";
+switch(select("- Deviling:- Ghostring:- Angeling:- Maya Macho")){
+ 
+case 1:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Deviling",1582,1;
+        end;
+       
+case 2:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Ghostring",1120,1;
+        end;
+       
+case 3:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Angeling",1096,1;
+        end;
+       
+case 4:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Maya Macho",1289,1;
+        end;
+}
+ 
+mvp:
+next;
+mes .mvp$;
+mes "Então selecione qual você quer:";
+switch(select("- General Tartaruga:- Abelha Rainha:- Tao Gunka:- Freeoni:- Serpente Suprema:- Samurai Encarnado")){
+ 
+case 1:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] General Targaruga",1312,1;
+        end;
+ 
+case 2:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Abelha Rainha",1059,1;
+        end;
+       
+case 3:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Tao Gunka",1583,1;
+        end;
+ 
+case 4:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Freeoni",1159,1;
+        end;
+ 
+case 5:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Serpente Suprema",1418,1;
+        end;
+       
+case 6:
+        next;
+        mes .mvp$;
+        mes "Vou invoca-lo agora!";
+        close2;
+        monster "prontera",151,151,"[Invocador] Samurai Encarnado",1492,1;
+        end;
+}
+}
