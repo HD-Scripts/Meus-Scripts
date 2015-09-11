@@ -8,7 +8,7 @@
 //   Hurican Dooders Script's ™        | |                      //
 //                                     |_|                      //
 //                                                              //
-// Muda aparência de personagens	                              //
+// Muda aparência de personagens	                        //
 // Versão 1.0                                                   //
 // Compatibilidade: Cronus & brAthena                           //
 //==============================================================//
